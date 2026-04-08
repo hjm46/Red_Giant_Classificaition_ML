@@ -23,3 +23,9 @@
   - Data: apStar-dr17-2M00000002+7417074.fits
   Graphs made:
   - single_spectra.png
+
+Total Stars in Dataset: 22266
+
+Stars in Training:
+
+Stars in Validation:
