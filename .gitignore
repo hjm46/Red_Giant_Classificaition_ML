@@ -1,4 +1,4 @@
 # Data files
 *.fits
-allstar_processed_fixed.csv
-cleaned_data.csv
+*.npy
+*.csv
