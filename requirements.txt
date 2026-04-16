@@ -1,0 +1,11 @@
+pandas
+astropy
+seaborn
+numpy
+matplotlib
+scipy
+requests
+os
+io
+time
+tensorflow
