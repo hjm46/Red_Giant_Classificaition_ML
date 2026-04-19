@@ -57,6 +57,7 @@ Supervised Machine Learning Model: supervised_model.ipynb
   - supervised_spectra_comparison
     
 Unsupervised Machine Learning Model:
+- Purpose: This was the initial plan for the project and right now does not work because of hallucinations.
 
 ### DATA CLEANING
 The following data cleaning scheme was used.
@@ -154,6 +155,12 @@ Model Structure:
 <img width="539" height="455" alt="supervised_confusion_matrix" src="https://github.com/user-attachments/assets/6ee34032-3d29-4450-833d-7aa5e33f12b0" /><br>
 <img width="567" height="455" alt="supervised_hr_diagram" src="https://github.com/user-attachments/assets/b23565f1-a555-4c49-b676-8d5a2798c2f1" /><br>
 <img width="1590" height="990" alt="supervised_spectra_comparison" src="https://github.com/user-attachments/assets/7d4b3f8d-f97f-43d5-a59c-7e2076a5f6f9" /><br>
+
+### OVERALL RESULTS
+Before this project it was unknown if Red Giant and Red Clump stars could actually be differentiated only using their spectra. The results of this project show that there is enough meaningful differentiation between Red Giant and Red Clump spectra to seperate them. A next step could be to analyze what features in the spectra are the key factors in differentiating and what these correspond to physically.
+
+<img width="567" height="455" alt="HR_rc_vs_rbg" src="https://github.com/user-attachments/assets/84abe03f-872b-4cf9-ac29-5d6865770fe4" /><br>
+<img width="567" height="455" alt="supervised_hr_diagram" src="https://github.com/user-attachments/assets/7633a3d5-aad7-49c0-bd38-7ccb0c596d8a" /><br>
 
 
 
