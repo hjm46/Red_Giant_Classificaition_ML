@@ -20,20 +20,20 @@ Metadata Exploratory Data Analysis: metadata_eda.ipynb
 - Purpose: Exploring the distribution of the data before training
   Files used:
   - Data: cleaned_data.csv
-  Graphs made:
-  - Effective_temperature_graph.png
-  - log_surface_gravity_graph.png
-  - Signal_to_noise_graph.png
-  - HR_density_heatmap_all
-  - HR_density_heatmap_RBG
-  - HR_rc_vs_rbg
+  - Graphs made:
+    - Effective_temperature_graph.png
+    - log_surface_gravity_graph.png
+    - Signal_to_noise_graph.png
+    - HR_density_heatmap_all
+    - HR_density_heatmap_RBG
+    - HR_rc_vs_rbg
   
 Single Spectra Analysis: single_spectra_analysis.ipynb
 - Purpose: To understand the structure of each spectra file so it can be properly formated for training
   Files used:
   - Data: apStar-dr17-2M00000002+7417074.fits
-  Graphs made:
-  - single_spectra.png
+  - Graphs made:
+    - single_spectra.png
     
 Getting Data: getting_data.ipynb
 - Purpose: program to batch download data and format it for training
@@ -87,15 +87,11 @@ HR Diagrams using Log Effective Gravity and Log Effective Temperature
 
 Using the scheme to filter Red Clump stars from the Bovy paper:
 
-t_ref = -382.5 * df_shuffled['RV_FEH'] + 4607
-
-delta_t = df_shuffled['RV_TEFF'] - t_ref
-
-logg_upper_bound = (0.0018 * delta_t) + 2.5
-
-rc_mask = df_shuffled["RV_LOGG"].between(1.8, logg_upper_bound)
-
-df_shuffled["Stellar_type"] = np.where(rc_mask, "Red Clump", "Red Giant"),
+- t_ref = -382.5 * df_shuffled['RV_FEH'] + 4607
+- delta_t = df_shuffled['RV_TEFF'] - t_ref
+- logg_upper_bound = (0.0018 * delta_t) + 2.5
+- rc_mask = df_shuffled["RV_LOGG"].between(1.8, logg_upper_bound)
+- df_shuffled["Stellar_type"] = np.where(rc_mask, "Red Clump", "Red Giant"),
 
 we get the following distribution of Red Giant and Red Clump stars in the HR Diagram.
 
@@ -103,3 +99,81 @@ we get the following distribution of Red Giant and Red Clump stars in the HR Dia
 
 ### SINGLE SPECTRA ANALYSIS
 The goal here was to explore how the spectra file is organized and what the spectra looks like.
+
+Spectra File Structure:
+
+APOGEE Reduction Pipeline Version: 0.17.22
+- HDU0 : header
+- HDU1 : flux
+- HDU2 : flux uncertainty
+- HDU3 : pixel bitmask
+- HDU4 : sky
+- HDU5 : sky uncertainty
+- HDU6 : telluric
+- HDU7 : telluric uncertainty
+- HDU8 : LSF table
+- HDU9 : RV table
+- HDU10 : RV table for combined spectrum
+
+Spectra Sample:
+<img width="1023" height="547" alt="single_spectra" src="https://github.com/user-attachments/assets/ea5fb887-29a9-464d-ad1d-2eb577e3b804" /><br>
+
+### SUPERVISED MACHINE LEARNING MODEL
+This model was trained with about 13,000 samples. Both weighted classes and balancing classes were attempted, and balancing classes gave better accuracy.
+
+Data Splits:
+- Testing: 20%
+- Leftover 80%:
+  - Validation: 20%
+  - Training: 80%
+ 
+Training Scheme: 3 Channels, balanced classes
+- Normalized Flux (using clipping)
+- Flux Gradient
+- Normalized Flux Error (using clipping)
+
+Model Structure: 
+- Kernal Sizes: 7, 11, 11
+- Activation Function: relu
+- Learning Rate: 0.0001
+- Loss: binary cross-entropy
+- Metric: accuracy
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ conv1d_3 (Conv1D)               │ (None, 8575, 32)       │           704 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_2           │ (None, 8575, 32)       │           128 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling1d_2 (MaxPooling1D)  │ (None, 4287, 32)       │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv1d_4 (Conv1D)               │ (None, 4287, 64)       │        22,592 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ batch_normalization_3           │ (None, 4287, 64)       │           256 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling1d_3 (MaxPooling1D)  │ (None, 2143, 64)       │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv1d_5 (Conv1D)               │ (None, 2143, 128)      │        90,240 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ global_max_pooling1d_1          │ (None, 128)            │             0 │
+│ (GlobalMaxPooling1D)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_2 (Dense)                 │ (None, 128)            │        16,512 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_1 (Dropout)             │ (None, 128)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_3 (Dense)                 │ (None, 1)              │           129 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+
+#### Results
+
+<img width="576" height="455" alt="supervised_model_accuracy" src="https://github.com/user-attachments/assets/0c5c68d2-6fea-40a7-97d2-c810232fc5cb" /><br>
+<img width="539" height="455" alt="supervised_confusion_matrix" src="https://github.com/user-attachments/assets/6ee34032-3d29-4450-833d-7aa5e33f12b0" /><br>
+<img width="567" height="455" alt="supervised_hr_diagram" src="https://github.com/user-attachments/assets/b23565f1-a555-4c49-b676-8d5a2798c2f1" /><br>
+<img width="1590" height="990" alt="supervised_spectra_comparison" src="https://github.com/user-attachments/assets/7d4b3f8d-f97f-43d5-a59c-7e2076a5f6f9" /><br>
+
+
+
