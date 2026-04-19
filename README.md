@@ -11,35 +11,31 @@ The goal of this project is to see if we can use machine learning to accurately 
 ### CONTENTS AND FILE KEY
 Data Cleaning: data_cleaning.ipynb
 - Purpose: Filtering out unwanted data for training
-  Files used:
-  - Raw Data: allField-dr17.fits
-  - Initial Processing: allstar_processed_fixed.csv
-  - Final Datafile: cleaned_data.csv
+- Raw Data: allField-dr17.fits
+- Initial Processing: allstar_processed_fixed.csv
+- Final Datafile: cleaned_data.csv
  
 Metadata Exploratory Data Analysis: metadata_eda.ipynb
 - Purpose: Exploring the distribution of the data before training
-  Files used:
-  - Data: cleaned_data.csv
-  - Graphs made:
-    - Effective_temperature_graph.png
-    - log_surface_gravity_graph.png
-    - Signal_to_noise_graph.png
-    - HR_density_heatmap_all
-    - HR_density_heatmap_RBG
-    - HR_rc_vs_rbg
+- Data: cleaned_data.csv
+- Graphs made:
+  - Effective_temperature_graph.png
+  - log_surface_gravity_graph.png
+  - Signal_to_noise_graph.png
+  - HR_density_heatmap_all
+  - HR_density_heatmap_RBG
+  - HR_rc_vs_rbg
   
 Single Spectra Analysis: single_spectra_analysis.ipynb
 - Purpose: To understand the structure of each spectra file so it can be properly formated for training
-  Files used:
-  - Data: apStar-dr17-2M00000002+7417074.fits
-  - Graphs made:
-    - single_spectra.png
+- Data: apStar-dr17-2M00000002+7417074.fits
+- Graphs made:
+  - single_spectra.png
     
 Getting Data: getting_data.ipynb
 - Purpose: program to batch download data and format it for training
-  Files used:
-  - Data: cleaned_data.csv, cleaned_data_shuffled.csv
-  - Output files: processed_spectra.npy, processed_labels.npy
+- Data: cleaned_data.csv, cleaned_data_shuffled.csv
+- Output files: processed_spectra.npy, processed_labels.npy
     
 Supervised Machine Learning Model: supervised_model.ipynb
 - Purpose: Construction, training, and results of supervised machine learning model to seperate red clump and red giant stars
