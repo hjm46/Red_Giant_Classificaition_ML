@@ -11,13 +11,16 @@ The goal of this project is to see if we can use machine learning to accurately 
 ### CONTENTS AND FILE KEY
 Data Cleaning: data_cleaning.ipynb
 - Purpose: Filtering out unwanted data for training
-- Raw Data: allField-dr17.fits
-- Initial Processing: allstar_processed_fixed.csv
-- Final Datafile: cleaned_data.csv
+- Raw Data:
+  - allField-dr17.fits
+- Output files:
+  - allstar_processed_fixed.csv
+  - cleaned_data.csv
  
 Metadata Exploratory Data Analysis: metadata_eda.ipynb
 - Purpose: Exploring the distribution of the data before training
-- Data: cleaned_data.csv
+- Data:
+  - cleaned_data.csv
 - Graphs made:
   - Effective_temperature_graph.png
   - log_surface_gravity_graph.png
@@ -28,18 +31,25 @@ Metadata Exploratory Data Analysis: metadata_eda.ipynb
   
 Single Spectra Analysis: single_spectra_analysis.ipynb
 - Purpose: To understand the structure of each spectra file so it can be properly formated for training
-- Data: apStar-dr17-2M00000002+7417074.fits
+- Data:
+  - apStar-dr17-2M00000002+7417074.fits
 - Graphs made:
   - single_spectra.png
     
 Getting Data: getting_data.ipynb
 - Purpose: program to batch download data and format it for training
-- Data: cleaned_data.csv, cleaned_data_shuffled.csv
-- Output files: processed_spectra.npy, processed_labels.npy
+- Data:
+  - cleaned_data.csv
+  - cleaned_data_shuffled.csv
+- Output files:
+  - processed_spectra.npy
+  - processed_labels.npy
     
 Supervised Machine Learning Model: supervised_model.ipynb
 - Purpose: Construction, training, and results of supervised machine learning model to seperate red clump and red giant stars
-- Data: processed_spectra.npy, processed_labels.npy
+- Data:
+  - processed_spectra.npy
+  - processed_labels.npy
 - Graphs made:
   - supervised_model_accuracy.png
   - supervised_confusion_matrix.png
