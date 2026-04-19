@@ -122,6 +122,8 @@ APOGEE Reduction Pipeline Version: 0.17.22
 - HDU9 : RV table
 - HDU10 : RV table for combined spectrum
 
+For the purpose of this project, we are only interested in the Flux, Flux Uncertainty (error), and Pixel Bitmask (bad pixels).
+
 Spectra Sample:
 <img width="1023" height="547" alt="single_spectra" src="https://github.com/user-attachments/assets/ea5fb887-29a9-464d-ad1d-2eb577e3b804" /><br>
 
