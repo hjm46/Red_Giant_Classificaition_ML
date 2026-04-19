@@ -8,13 +8,16 @@ The goal of this project is to see if we can use machine learning to accurately 
 - Bitmasks for data cleaning: https://www.sdss4.org/dr17/irspec/apogee-bitmasks/
 - Filtering values and reference for classification: https://ui.adsabs.harvard.edu/abs/2014ApJ...790..127B/abstract
 
-### FILE KEY
+### CONTENTS AND FILE KEY
 - Data Cleaning: data_cleaning.ipynb
+- Purpose: Filtering out unwanted data for training
   Files used:
   - Raw Data: allField-dr17.fits
   - Initial Processing: allstar_processed_fixed.csv
   - Final Datafile: cleaned_data.csv
+ 
 - Metadata Exploratory Data Analysis: metadata_eda.ipynb
+- Purpose: Exploring the distribution of the data before training
   Files used:
   - Data: cleaned_data.csv
   Graphs made:
@@ -24,23 +27,30 @@ The goal of this project is to see if we can use machine learning to accurately 
   - HR_density_heatmap_all
   - HR_density_heatmap_RBG
   - HR_rc_vs_rbg
-- Single Spectra EDA: single_spectra_analysis.ipynb
+  
+- Single Spectra Analysis: single_spectra_analysis.ipynb
+- Purpose: To understand the structure of each spectra file so it can be properly formated for training
   Files used:
   - Data: apStar-dr17-2M00000002+7417074.fits
   Graphs made:
   - single_spectra.png
+    
 - Getting Data: getting_data.ipynb
+- Purpose: program to batch download data and format it for training
   Files used:
   - Data: cleaned_data.csv, cleaned_data_shuffled.csv
   - Output files: processed_spectra.npy, processed_labels.npy
-Supervised Machine Learning Model: supervised_model.ipynb
+    
+- Supervised Machine Learning Model: supervised_model.ipynb
+- Purpose: Construction, training, and results of supervised machine learning model to seperate red clump and red giant stars
 - Data: processed_spectra.npy, processed_labels.npy
 - Graphs made:
   - supervised_model_accuracy.png
   - supervised_confusion_matrix.png
   - supervised_hr_diagram
   - supervised_spectra_comparison
- Unsupervised Machine Learning Model:
+    
+ - Unsupervised Machine Learning Model:
 
 ### DATA CLEANING
 The following data cleaning scheme was used.
@@ -64,14 +74,17 @@ The parallax Signal to Noise Ratio was calculated using the columns GAIAEDR3_PAR
 - 0 < GAIAEDR3_PARALLAX < 1.5
 
 ### METADATA EXPLORATORY DATA ANALYSIS
-This notebook's role was to explore the spectra data and distribution before using it for training. Distributions of the data are as followed.
+The goal of this section of the project was to explore the spectra data and distribution before using it for training. Distributions of the data are as followed.
+
 <img width="580" height="455" alt="Signal_to_Noise_graph" src="https://github.com/user-attachments/assets/5e7f3063-df16-46c5-ae6c-abddbf7b465f" />
 
 <img width="579" height="455" alt="Effective_temperature_graph" src="https://github.com/user-attachments/assets/8a1eada8-a07d-4ce7-bf05-c7ef4ef160d1" />
 
+
 <img width="571" height="455" alt="log_surface_gravity_graph" src="https://github.com/user-attachments/assets/2ed6198f-8fe3-4984-bad4-807072558959" />
 
 HR Diagrams using Log Effective Gravity and Log Effective Temperature
+
 <img width="558" height="455" alt="HR_density_heatmap_all" src="https://github.com/user-attachments/assets/27e5874e-e1c1-4098-b8b4-24bbf057662b" />
 
 <img width="571" height="455" alt="HR_density_heatmap_RBG" src="https://github.com/user-attachments/assets/47473694-1612-427d-a8fa-eb6ed0ccfbee" />
@@ -91,3 +104,7 @@ df_shuffled["Stellar_type"] = np.where(rc_mask, "Red Clump", "Red Giant"),
 we get the following distribution of Red Giant and Red Clump stars in the HR Diagram.
 
 <img width="567" height="455" alt="HR_rc_vs_rbg" src="https://github.com/user-attachments/assets/e140e31b-d9a6-4f44-b38e-edfef5f3d039" />
+
+
+### SINGLE SPECTRA ANALYSIS
+The goal here was to explore how the spectra file is organized and what the spectra looks like.
